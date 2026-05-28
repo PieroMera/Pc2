@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "javascript",
+			"path": "../../../../../.."
+		},
+		{
+			"name": "App-Proyecto",
+			"path": "../../../../../../../App-Proyecto"
+		},
+		{
+			"name": "Proyecto-Web",
+			"path": "../../../../../../../Proyecto-Web"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}
