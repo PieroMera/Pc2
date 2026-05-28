@@ -1,0 +1,57 @@
+.prod-container {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.titulo {
+  color: #2c5282;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.descripcion {
+  color: #555;
+  font-size: 0.97rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.13);
+}
+
+.card-nombre {
+  color: #2c5282;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.card-info {
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0.45rem 0;
+}
+
+.label {
+  font-weight: 700;
+  color: #222;
+}

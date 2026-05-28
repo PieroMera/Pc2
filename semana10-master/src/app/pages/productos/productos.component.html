@@ -1,0 +1,19 @@
+<div class="prod-container">
+  <h1 class="titulo">Listado de Productos</h1>
+  <p class="descripcion">
+    En esta sección se muestran productos registrados en el sistema.
+    Se aplican pipes para formatear texto, moneda y fechas.
+  </p>
+
+  <div class="cards-grid">
+    @for (p of productos; track p.nombre) {
+      <div class="card">
+        <h2 class="card-nombre">{{ p.nombre | uppercase }}</h2>
+        <p class="card-info"><span class="label">Categoría:</span> {{ p.categoria }}</p>
+        <p class="card-info"><span class="label">Precio:</span> {{ p.precio | currency:'PEN':'symbol':'1.2-2' }}</p>
+        <p class="card-info"><span class="label">Fecha de registro:</span> {{ p.fechaRegistro | date:'dd/MM/yyyy' }}</p>
+        <p class="card-info"><span class="label">Stock disponible:</span> {{ p.stock }}</p>
+      </div>
+    }
+  </div>
+</div>
