@@ -201,6 +201,33 @@
   color: #9b2c2c;
 }
 
+.observacion-badge {
+  display: block;
+  padding: 0.5rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 0.8rem;
+  background-color: #e2e8f0;
+  color: #2d3748;
+}
+
+.excelente {
+  background-color: #bee3f8;
+  color: #2b6cb0;
+}
+
+.regular {
+  background-color: #fefcbf;
+  color: #744210;
+}
+
+.riesgo {
+  background-color: #fed7d7;
+  color: #9b2c2c;
+}
+
 @media (max-width: 600px) {
   .grid-3, .grid-2, .resultado-grid {
     grid-template-columns: 1fr;

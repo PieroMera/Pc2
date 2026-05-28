@@ -14,6 +14,17 @@
       />
     </div>
 
+    <div class="form-group">
+      <label>Código de Estudiante</label>
+      <input
+        type="text"
+        class="input-field"
+        placeholder="Ej: 20231234"
+        [value]="codigoEstudiante()"
+        (input)="setCodigo($any($event.target).value)"
+      />
+    </div>
+
     <div class="seccion-titulo">Notas de Práctica (30%)</div>
     <div class="grid-3">
       <div class="form-group">
@@ -77,21 +88,30 @@
     </div>
 
     <div class="botones">
-      <button class="btn-calcular" (click)="calcular()">Calcular Promedio</button>
+      <button class="btn-calcular" (click)="calcular()" [disabled]="cargando()">
+        {{ cargando() ? 'Calculando...' : 'Calcular Promedio' }}
+      </button>
       <button class="btn-limpiar" (click)="limpiar()">Limpiar</button>
     </div>
+
+    @if (error()) {
+      <p style="color: red; margin-top: 10px;">{{ error() }}</p>
+    }
   </div>
 
-  @if (calculado()) {
+  @if (calculado() && resultado()) {
     <div class="resultado-card">
-      @if (alumno()) {
-        <p class="alumno-nombre">Alumno: <strong>{{ alumno() }}</strong></p>
+      @if (resultado()!.codigoEstudiante) {
+        <p class="alumno-nombre">Código: <strong>{{ resultado()!.codigoEstudiante }}</strong></p>
+      }
+      @if (resultado()!.alumno) {
+        <p class="alumno-nombre">Alumno: <strong>{{ resultado()!.alumno }}</strong></p>
       }
 
       <div class="resultado-grid">
         <div class="resultado-item">
           <span class="resultado-label">Promedio Prácticas</span>
-          <span class="resultado-valor">{{ promedioPracticas() | number:'1.1-2' }}</span>
+          <span class="resultado-valor">{{ resultado()!.promedioPracticas | number:'1.1-2' }}</span>
         </div>
         <div class="resultado-item">
           <span class="resultado-label">Examen Parcial</span>
@@ -105,11 +125,18 @@
 
       <div class="nota-final-box">
         <span class="nota-final-label">Nota Final</span>
-        <span class="nota-final-valor">{{ notaFinal() | number:'1.1-2' }}</span>
+        <span class="nota-final-valor">{{ resultado()!.notaFinal | number:'1.1-2' }}</span>
       </div>
 
-      <div class="estado-badge" [class.aprobado]="aprobado()" [class.desaprobado]="!aprobado()">
-        {{ aprobado() ? 'APROBADO' : 'DESAPROBADO' }}
+      <div class="estado-badge" [class.aprobado]="resultado()!.aprobado" [class.desaprobado]="!resultado()!.aprobado">
+        {{ resultado()!.aprobado ? 'APROBADO' : 'DESAPROBADO' }}
+      </div>
+
+      <div class="observacion-badge"
+        [class.excelente]="resultado()!.observacion === 'EXCELENTE'"
+        [class.regular]="resultado()!.observacion === 'REGULAR'"
+        [class.riesgo]="resultado()!.observacion === 'RIESGO'">
+        Observación: {{ resultado()!.observacion }}
       </div>
     </div>
   }

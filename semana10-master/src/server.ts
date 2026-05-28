@@ -12,21 +12,33 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+app.use(express.json());
 
-/**
- * Serve static files from /browser
- */
+app.post('/api/calcular-nota', (req, res) => {
+  const { alumno, codigoEstudiante, nota1, nota2, nota3, examenParcial, examenFinal } = req.body;
+
+  const n1 = Number(nota1) || 0;
+  const n2 = Number(nota2) || 0;
+  const n3 = Number(nota3) || 0;
+  const parcial = Number(examenParcial) || 0;
+  const final = Number(examenFinal) || 0;
+
+  const promedioPracticas = (n1 + n2 + n3) / 3;
+  const notaFinal = promedioPracticas * 0.30 + parcial * 0.30 + final * 0.40;
+  const aprobado = notaFinal >= 13;
+
+  let observacion: string;
+  if (notaFinal >= 17) {
+    observacion = 'EXCELENTE';
+  } else if (notaFinal >= 13) {
+    observacion = 'REGULAR';
+  } else {
+    observacion = 'RIESGO';
+  }
+
+  res.json({ alumno, codigoEstudiante, promedioPracticas, notaFinal, aprobado, observacion });
+});
+
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
@@ -35,9 +47,6 @@ app.use(
   }),
 );
 
-/**
- * Handle all other requests by rendering the Angular application.
- */
 app.use((req, res, next) => {
   angularApp
     .handle(req)
@@ -47,10 +56,6 @@ app.use((req, res, next) => {
     .catch(next);
 });
 
-/**
- * Start the server if this module is the main entry point, or it is ran via PM2.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, (error) => {
@@ -62,7 +67,4 @@ if (isMainModule(import.meta.url) || process.env['pm_id']) {
   });
 }
 
-/**
- * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
- */
 export const reqHandler = createNodeRequestHandler(app);
